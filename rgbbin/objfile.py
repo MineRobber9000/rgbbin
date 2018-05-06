@@ -61,11 +61,12 @@ class ObjectFile():
 		return result
 
 	def parse_header(self):
-		signature = self.read_bytes(4)
+		signature = self.read_bytes(3)
+		self.read_byte()
 		if sys.version_info.major==2:
 			signature = bytearray(signature)
-		if signature != b"RGB6":
-			raise ObjectParseError("not a valid RGBASM 6 object file")
+		if signature != b"RGB":
+			raise ObjectParseError("not a valid RGBASM object file")
 
 		self.symbol_count = self.read_dword()
 		self.section_count = self.read_dword()
